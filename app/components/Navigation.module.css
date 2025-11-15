@@ -1,0 +1,112 @@
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 393px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.navButton {
+  background-color: #d9d9d9;
+  border: none;
+  border-radius: 10px;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navButton:hover {
+  background-color: #c5c5c5;
+}
+
+.navButton:active {
+  background-color: #b0b0b0;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+  position: relative;
+}
+
+.iconPlus {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.iconPlus::before,
+.iconPlus::after {
+  content: '';
+  position: absolute;
+  background-color: #414141;
+  border-radius: 10px;
+}
+
+.iconPlus::before {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 5px;
+}
+
+.iconPlus::after {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  width: 24px;
+  height: 5px;
+}
+
+.iconArrowLeft {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconArrowLeft::before,
+.iconArrowLeft::after {
+  content: '';
+  position: absolute;
+  background-color: #414141;
+  width: 15px;
+  height: 5px;
+  border-radius: 10px;
+}
+
+.iconArrowLeft::before {
+  transform: rotate(45deg) translateX(-3px);
+}
+
+.iconArrowLeft::after {
+  transform: rotate(-45deg) translateX(-3px);
+}
+
+.label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #000000;
+  text-align: center;
+  width: 100%;
+}
