@@ -219,9 +219,14 @@ export const BookDetail = () => {
             <div className={styles.timerDisplay}>
               {formatTime(sessionSeconds)}
             </div>
-            <button className={styles.stopButton} onClick={handleStopSession}>
-              STOP
-            </button>
+            <div className={styles.timerButtons}>
+              <button className={styles.cancelButton} onClick={handleCloseDrawer}>
+                CANCEL
+              </button>
+              <button className={styles.stopButton} onClick={handleStopSession}>
+                STOP
+              </button>
+            </div>
           </div>
         </div>
       )}

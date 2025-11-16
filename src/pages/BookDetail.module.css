@@ -195,14 +195,23 @@
 }
 
 .timerDisplay {
-  font-family: var(--font-sans);
-  font-size: 100px;
+  font-family: var(--font-serif);
+  font-size: 96px;
   font-weight: var(--font-weight-regular);
   color: var(--color-text-primary);
   line-height: 1;
   letter-spacing: -2px;
 }
 
+.timerButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 221px;
+  gap: 11px;
+}
+
+.cancelButton,
 .stopButton {
   width: 105px;
   height: 105px;
@@ -219,12 +228,15 @@
   color: var(--color-text-primary);
   text-transform: uppercase;
   transition: opacity 0.2s;
+  position: relative;
 }
 
+.cancelButton:hover,
 .stopButton:hover {
   opacity: 0.9;
 }
 
+.cancelButton:active,
 .stopButton:active {
   opacity: 0.8;
   transform: scale(0.98);
