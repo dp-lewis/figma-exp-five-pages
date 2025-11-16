@@ -1,11 +1,12 @@
 # Five Pages or Five Minutes - Prototype Plan
 
 ## Overview
-Reading tracking app built with Remix + TypeScript that helps users commit to reading 5 pages or 5 minutes at a time.
+Reading tracking app built with Vite + React + TypeScript that helps users commit to reading 5 pages or 5 minutes at a time.
 
 ## Tech Stack
-- **Framework**: Remix with TypeScript
-- **Database**: SQLite + Prisma ORM
+- **Framework**: Vite + React with TypeScript (client-side only)
+- **Data Storage**: localStorage for simplicity (no database/ORM)
+- **Routing**: React Router (client-side)
 - **Styling**: CSS Modules with design tokens
 - **UI**: React components matching Figma designs
 - **Layout**: Mobile-only (393×852 viewport) - desktop implementation deferred
@@ -22,15 +23,16 @@ Reading tracking app built with Remix + TypeScript that helps users commit to re
 ## Implementation Plan
 
 ### Phase 1: Foundation
-1. **Set up Remix project structure**
-   - Initialize Remix app with TypeScript
-   - Configure routes, components, utilities folders
+1. **Set up Vite + React project structure**
+   - Initialize Vite app with React + TypeScript
+   - Install React Router for client-side routing
+   - Configure src folder structure (pages, components, utils, types)
    - Set up CSS Modules
 
-2. **Create data models and database schema**
+2. **Create data models and storage utilities**
    - Types: Book, ReadingSession, Note
-   - SQLite database with Prisma
-   - Migrations for all tables
+   - localStorage helper functions (save/load/update)
+   - In-memory state management with React Context or simple hooks
 
 ### Phase 2: Core Screens
 3. **Build initial/welcome screen** (Frame 1:2)
@@ -44,18 +46,18 @@ Reading tracking app built with Remix + TypeScript that helps users commit to re
 
 5. **Implement add book modal/form** (Frame 1:110)
    - Title input field
-   - Form submission with Remix action
-   - Save to database
+   - Form submission with React state
+   - Save to localStorage
 
 6. **Build populated book listing page** (Frame 1:32)
    - BookListing component with dividers
-   - Remix loader for data fetching
+   - Load books from localStorage
    - Clickable book items
 
 7. **Create book detail page with notes** (Frame 4:231)
    - Display book title and stats
    - Show notes organized by date
-   - Reading session stats aggregation
+   - Calculate reading session stats from localStorage data
 
 ### Phase 3: Reading Session Flow
 8. **Implement reading session timer** (Frame 9:449)
@@ -66,7 +68,7 @@ Reading tracking app built with Remix + TypeScript that helps users commit to re
 9. **Create session completion and notes form** (Frame 10:488)
    - Session summary display
    - Notes textarea input
-   - Save session + notes via Remix action
+   - Save session + notes to localStorage
 
 ### Phase 4: Polish
 10. **Build reusable Navigation component**
@@ -99,17 +101,49 @@ Design tokens will include:
 - Border radius values
 - Component-specific tokens
 
-## Database Schema (Prisma)
-```
-Book
-- id, title, createdAt
+## Icon Handling
+- All icons should be handled as **SVG components**
+- Create reusable SVG icon components (e.g., `IconArrowLeft.tsx`, `IconPlus.tsx`)
+- Style icons with CSS and accept color/size props for flexibility
 
-ReadingSession
-- id, bookId, duration, createdAt
-
-Note
-- id, sessionId, content, createdAt
+## Project Structure
+Components should be organized in their own folders, not in a flat structure:
 ```
+src/components/
+  Navigation/
+    Navigation.tsx
+    Navigation.module.css
+  AddBookModal/
+    AddBookModal.tsx
+    AddBookModal.module.css
+  IconArrowLeft/
+    IconArrowLeft.tsx
+  IconPlus/
+    IconPlus.tsx
+  ...
+```
+Each component folder contains its component file and associated styles.
+
+## Data Storage (localStorage)
+Simple JSON objects stored in localStorage:
+```typescript
+books: Book[] = [
+  { id: string, title: string, createdAt: Date }
+]
+
+readingSessions: ReadingSession[] = [
+  { id: string, bookId: string, duration: number, createdAt: Date }
+]
+
+notes: Note[] = [
+  { id: string, sessionId: string, content: string, createdAt: Date }
+]
+```
+
+Helper functions:
+- `loadBooks()`, `saveBooks(books)`, `addBook(book)`
+- `loadSessions()`, `saveSessions(sessions)`, `addSession(session)`
+- `loadNotes()`, `saveNotes(notes)`, `addNote(note)`
 
 ## Success Criteria
 - All 7 screens implemented and functional
