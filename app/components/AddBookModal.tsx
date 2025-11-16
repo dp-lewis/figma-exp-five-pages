@@ -1,5 +1,6 @@
 import { Form } from "react-router";
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import styles from "./AddBookModal.module.css";
 
 interface AddBookModalProps {
@@ -19,7 +20,12 @@ export function AddBookModal({ isOpen, onClose }: AddBookModalProps) {
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-      return () => document.removeEventListener("keydown", handleEscape);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.removeEventListener("keydown", handleEscape);
+        document.body.style.overflow = "";
+      };
     }
   }, [isOpen, onClose]);
 
@@ -31,7 +37,7 @@ export function AddBookModal({ isOpen, onClose }: AddBookModalProps) {
     }
   };
 
-  return (
+  const modalContent = (
     <div 
       className={styles.overlay} 
       ref={overlayRef}
@@ -62,4 +68,11 @@ export function AddBookModal({ isOpen, onClose }: AddBookModalProps) {
       </div>
     </div>
   );
+
+  // Only use portal on client side
+  if (typeof document !== "undefined") {
+    return createPortal(modalContent, document.body);
+  }
+
+  return null;
 }

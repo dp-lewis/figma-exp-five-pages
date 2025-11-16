@@ -1,5 +1,4 @@
-import { useLoaderData } from "react-router";
-import { useState } from "react";
+import { useLoaderData, useSearchParams } from "react-router";
 import { getAllBooks, createBook } from "~/utils/books.server";
 import { Navigation } from "~/components/Navigation";
 import { AddBookModal } from "~/components/AddBookModal";
@@ -23,15 +22,16 @@ export async function action({ request }: { request: Request }) {
 
 export default function Books() {
   const { books } = useLoaderData<typeof loader>();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const hasBooks = books.length > 0;
+  const showModal = searchParams.get("add") === "true";
 
   const handleAddClick = () => {
-    setIsModalOpen(true);
+    setSearchParams({ add: "true" });
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setSearchParams({});
   };
 
   return (
@@ -60,7 +60,7 @@ export default function Books() {
       </div>
 
       <Navigation backTo="/" onAddClick={handleAddClick} />
-      <AddBookModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <AddBookModal isOpen={showModal} onClose={handleCloseModal} />
     </div>
   );
 }

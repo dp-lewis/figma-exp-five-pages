@@ -8,6 +8,16 @@ interface NavigationProps {
 }
 
 export function Navigation({ onAddClick, backTo = "/", showAdd = true }: NavigationProps) {
+  const handleAddClick = (e: React.MouseEvent) => {
+    console.log("Navigation: Add button clicked");
+    if (onAddClick) {
+      console.log("Navigation: Calling onAddClick");
+      onAddClick();
+    } else {
+      console.log("Navigation: No onAddClick handler provided");
+    }
+  };
+
   return (
     <nav className={styles.navigation}>
       <Link to={backTo} className={styles.navButton}>
@@ -18,7 +28,7 @@ export function Navigation({ onAddClick, backTo = "/", showAdd = true }: Navigat
       </Link>
       
       {showAdd && (
-        <button className={styles.navButton} onClick={onAddClick}>
+        <button className={styles.navButton} onClick={handleAddClick} type="button">
           <div className={styles.icon}>
             <div className={styles.iconPlus} />
           </div>
