@@ -1,0 +1,33 @@
+.welcome {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: var(--color-background);
+  cursor: pointer;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 393px;
+  height: 396px;
+  background: linear-gradient(to bottom, var(--color-dark-gradient-start), var(--color-dark-gradient-end));
+}
+
+.heroText {
+  position: absolute;
+  top: 131px;
+  left: 35px;
+  width: 265px;
+  height: 253px;
+  font-family: var(--font-serif);
+  font-size: var(--font-size-hero);
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-white);
+  line-height: normal;
+}
+
+.heroText .bold {
+  font-weight: var(--font-weight-semibold);
+}

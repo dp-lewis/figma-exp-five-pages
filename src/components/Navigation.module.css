@@ -1,0 +1,108 @@
+.navigation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 393px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background-color: transparent;
+}
+
+.navButton {
+  background-color: var(--color-button-bg);
+  width: 70px;
+  height: 70px;
+  border-radius: var(--radius-small);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.navButton:hover {
+  opacity: 0.9;
+}
+
+.navButton:active {
+  opacity: 0.8;
+}
+
+.navIcon {
+  width: 25px;
+  height: 25px;
+  position: relative;
+}
+
+.navLabel {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Arrow Right Icon */
+.iconArrowRight {
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.arrowLine {
+  position: absolute;
+  background-color: var(--color-button-icon);
+  border-radius: 10px;
+}
+
+.arrowLine1 {
+  width: 15px;
+  height: 5px;
+  top: 6px;
+  left: 3px;
+  transform: rotate(-45deg);
+}
+
+.arrowLine2 {
+  width: 15px;
+  height: 6px;
+  top: 13px;
+  left: 3px;
+  transform: rotate(45deg);
+}
+
+/* Plus Icon */
+.iconPlus {
+  width: 25px;
+  height: 25px;
+  position: relative;
+}
+
+.plusLine {
+  position: absolute;
+  background-color: var(--color-button-icon);
+  border-radius: 10px;
+}
+
+.plusLineH {
+  width: 24px;
+  height: 5px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.plusLineV {
+  width: 5px;
+  height: 24px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}

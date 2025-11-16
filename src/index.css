@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;600&family=Inter:wght@400&display=swap');
+
+:root {
+  /* Colors */
+  --color-dark-gradient-start: #414141;
+  --color-dark-gradient-end: #2d2d2d;
+  --color-header-gradient-start: #2d2d2d;
+  --color-header-gradient-end: #1e1e1e;
+  --color-text-primary: #000000;
+  --color-text-white: #ffffff;
+  --color-background: #ffffff;
+  --color-button-bg: #d9d9d9;
+  --color-button-icon: #414141;
+  --color-border-dashed: #bcbcbc;
+  
+  /* Typography */
+  --font-serif: 'IBM Plex Serif', serif;
+  --font-sans: 'Inter', sans-serif;
+  
+  --font-size-hero: 36px;
+  --font-size-header: 24px;
+  --font-size-body: 16px;
+  --font-size-small: 12px;
+  
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 31px;
+  --spacing-xl: 35px;
+  
+  /* Border Radius */
+  --radius-small: 10px;
+  
+  /* Layout */
+  --app-width: 393px;
+  --app-height: 852px;
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  width: var(--app-width);
+  height: var(--app-height);
+  position: relative;
+  background-color: var(--color-background);
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button:focus-visible {
+  outline: 2px solid #646cff;
+  outline-offset: 2px;
+}

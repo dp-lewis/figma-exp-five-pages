@@ -1,0 +1,143 @@
+.bookDetail {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: var(--color-background);
+  overflow-y: auto;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 393px;
+  height: 79px;
+  background: linear-gradient(to bottom, var(--color-header-gradient-start), var(--color-header-gradient-end));
+  z-index: 10;
+}
+
+.headerTitle {
+  position: absolute;
+  top: 19px;
+  left: 31px;
+  width: 375px;
+  height: 41px;
+  font-family: var(--font-serif);
+  font-size: var(--font-size-header);
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-white);
+}
+
+.headerTitle .bold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.content {
+  padding: 104px 31px 150px 31px;
+}
+
+.bookInfo {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.bookInfoText {
+  flex: 1;
+}
+
+.bookTitle {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.bookStats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statLine {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  color: #666;
+}
+
+.bookCover {
+  width: 74px;
+  height: 121px;
+  border-radius: var(--radius-small);
+  background: linear-gradient(135deg, #e0e0e0, #c0c0c0);
+  flex-shrink: 0;
+}
+
+.notesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.noteGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.noteDate {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+}
+
+.noteContent {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  color: #333;
+  line-height: 1.6;
+}
+
+.startSessionButton {
+  position: fixed;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 60px;
+  background-color: var(--color-button-bg);
+  border-radius: var(--radius-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  transition: opacity 0.2s;
+  z-index: 5;
+}
+
+.startSessionButton:hover {
+  opacity: 0.9;
+}
+
+.startSessionButton:active {
+  opacity: 0.8;
+}
+
+.emptyNotes {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  color: #999;
+  text-align: center;
+  padding: 40px 0;
+}
