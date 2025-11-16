@@ -106,6 +106,24 @@ Design tokens will include:
 - Create reusable SVG icon components (e.g., `IconArrowLeft.tsx`, `IconPlus.tsx`)
 - Style icons with CSS and accept color/size props for flexibility
 
+## Project Structure
+Components should be organized in their own folders, not in a flat structure:
+```
+src/components/
+  Navigation/
+    Navigation.tsx
+    Navigation.module.css
+  AddBookModal/
+    AddBookModal.tsx
+    AddBookModal.module.css
+  IconArrowLeft/
+    IconArrowLeft.tsx
+  IconPlus/
+    IconPlus.tsx
+  ...
+```
+Each component folder contains its component file and associated styles.
+
 ## Data Storage (localStorage)
 Simple JSON objects stored in localStorage:
 ```typescript
