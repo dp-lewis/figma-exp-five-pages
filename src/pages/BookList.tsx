@@ -17,7 +17,22 @@ export const BookList = () => {
 
   const loadBooks = () => {
     const loadedBooks = getBooks();
-    setBooks(loadedBooks);
+    
+    // Sort books by most recently updated (based on last reading session)
+    const sortedBooks = loadedBooks.sort((a, b) => {
+      const lastUpdateA = getLastUpdateForBook(a.id);
+      const lastUpdateB = getLastUpdateForBook(b.id);
+      
+      // Books with no updates go to the end
+      if (!lastUpdateA && !lastUpdateB) return 0;
+      if (!lastUpdateA) return 1;
+      if (!lastUpdateB) return -1;
+      
+      // Most recent first
+      return new Date(lastUpdateB).getTime() - new Date(lastUpdateA).getTime();
+    });
+    
+    setBooks(sortedBooks);
   };
 
   const handleAddBook = () => {
@@ -112,7 +127,7 @@ export const BookList = () => {
         </div>
       )}
 
-      <Navigation showBack={false} showAdd={true} onAdd={handleAddBook} />
+      <Navigation showBack={true} showAdd={true} onAdd={handleAddBook} backTo="/" />
 
       {showAddModal && (
         <div className={styles.modalOverlay} onClick={handleCloseModal}>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import type { ReadingSession, Note } from '../types';
 import { saveSession, saveNote } from '../utils/storage';
+import { Navigation } from '../components/Navigation';
 import styles from './SessionComplete.module.css';
 
 interface LocationState {
@@ -85,6 +86,8 @@ export const SessionComplete = () => {
           </button>
         </form>
       </div>
+
+      <Navigation showBack={true} showAdd={false} />
     </div>
   );
 };

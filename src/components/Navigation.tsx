@@ -5,6 +5,8 @@ interface NavigationProps {
   showBack?: boolean;
   showAdd?: boolean;
   onAdd?: () => void;
+  backTo?: string; // Optional specific route to navigate back to
+  addLabel?: string; // Optional custom label for add button
 }
 
 const IconArrowRight = () => (
@@ -21,11 +23,15 @@ const IconPlus = () => (
   </div>
 );
 
-export const Navigation = ({ showBack = true, showAdd = true, onAdd }: NavigationProps) => {
+export const Navigation = ({ showBack = true, showAdd = true, onAdd, backTo, addLabel = 'Add' }: NavigationProps) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1);
+    if (backTo) {
+      navigate(backTo);
+    } else {
+      navigate(-1);
+    }
   };
 
   const handleAdd = () => {
@@ -51,7 +57,7 @@ export const Navigation = ({ showBack = true, showAdd = true, onAdd }: Navigatio
           <div className={styles.navIcon}>
             <IconPlus />
           </div>
-          <span className={styles.navLabel}>Add</span>
+          <span className={styles.navLabel}>{addLabel}</span>
         </button>
       )}
       {!showAdd && <div style={{ width: 70 }} />}

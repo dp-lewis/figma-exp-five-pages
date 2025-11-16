@@ -1,33 +1,111 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import type { Book, Note } from '../types';
-import { getBookById, getTotalMinutesForBook, getNotesForBook, getLastUpdateForBook } from '../utils/storage';
+import type { Book, Note, ReadingSession as ReadingSessionType } from '../types';
+import { getBookById, getTotalMinutesForBook, getNotesForBook, getLastUpdateForBook, saveSession, saveNote } from '../utils/storage';
 import { Navigation } from '../components/Navigation';
 import styles from './BookDetail.module.css';
+
+type DrawerView = 'none' | 'timer' | 'notes';
 
 export const BookDetail = () => {
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
   const [book, setBook] = useState<Book | null>(null);
   const [notes, setNotes] = useState<Note[]>([]);
+  const [drawerView, setDrawerView] = useState<DrawerView>('none');
+  const [sessionSeconds, setSessionSeconds] = useState(0);
+  const [sessionNote, setSessionNote] = useState('');
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const startTimeRef = useRef<string>('');
 
   useEffect(() => {
     if (bookId) {
       const foundBook = getBookById(bookId);
       if (foundBook) {
         setBook(foundBook);
-        const bookNotes = getNotesForBook(bookId);
-        setNotes(bookNotes);
+        loadNotes();
       } else {
         navigate('/books');
       }
     }
   }, [bookId, navigate]);
 
-  const handleStartSession = () => {
-    if (bookId) {
-      navigate(`/session/${bookId}`);
+  useEffect(() => {
+    let interval: number | undefined;
+
+    if (isTimerRunning) {
+      interval = window.setInterval(() => {
+        setSessionSeconds((prev) => prev + 1);
+      }, 1000);
     }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [isTimerRunning]);
+
+  const loadNotes = () => {
+    if (bookId) {
+      const bookNotes = getNotesForBook(bookId);
+      setNotes(bookNotes);
+    }
+  };
+
+  const handleStartSession = () => {
+    startTimeRef.current = new Date().toISOString();
+    setSessionSeconds(0);
+    setIsTimerRunning(true);
+    setDrawerView('timer');
+  };
+
+  const handleStopSession = () => {
+    setIsTimerRunning(false);
+    setDrawerView('notes');
+  };
+
+  const handleSaveNotes = () => {
+    if (!bookId) return;
+
+    const endTime = new Date().toISOString();
+    const durationMinutes = Math.floor(sessionSeconds / 60);
+
+    // Save the reading session
+    const session: ReadingSessionType = {
+      id: Date.now().toString(),
+      bookId,
+      startTime: startTimeRef.current,
+      endTime,
+      durationMinutes: durationMinutes > 0 ? durationMinutes : 1,
+    };
+    saveSession(session);
+
+    // Save notes if provided
+    if (sessionNote.trim()) {
+      const note: Note = {
+        id: (Date.now() + 1).toString(),
+        bookId,
+        sessionId: session.id,
+        content: sessionNote.trim(),
+        createdAt: new Date().toISOString(),
+      };
+      saveNote(note);
+    }
+
+    // Reset and close drawer
+    setSessionNote('');
+    setDrawerView('none');
+    loadNotes();
+  };
+
+  const handleCloseDrawer = () => {
+    if (isTimerRunning) {
+      setIsTimerRunning(false);
+    }
+    setDrawerView('none');
+    setSessionSeconds(0);
+    setSessionNote('');
   };
 
   const formatDuration = (minutes: number): string => {
@@ -37,6 +115,12 @@ export const BookDetail = () => {
       return `${hours} hour${hours > 1 ? 's' : ''} ${mins} minute${mins !== 1 ? 's' : ''} logged`;
     }
     return `${mins} minute${mins !== 1 ? 's' : ''} logged`;
+  };
+
+  const formatTime = (totalSeconds: number): string => {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   const formatLastUpdate = (dateString: string | null): string => {
@@ -127,6 +211,42 @@ export const BookDetail = () => {
       </button>
 
       <Navigation showBack={true} showAdd={false} />
+
+      {/* Timer Drawer */}
+      {drawerView === 'timer' && (
+        <div className={styles.drawerOverlay} onClick={handleCloseDrawer}>
+          <div className={styles.timerDrawer} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.timerDisplay}>
+              {formatTime(sessionSeconds)}
+            </div>
+            <button className={styles.stopButton} onClick={handleStopSession}>
+              STOP
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Notes Drawer */}
+      {drawerView === 'notes' && (
+        <div className={styles.drawerOverlay} onClick={handleCloseDrawer}>
+          <div className={styles.notesDrawer} onClick={(e) => e.stopPropagation()}>
+            <h2 className={styles.drawerTitle}>Notes from this session</h2>
+            <textarea
+              className={styles.notesInput}
+              value={sessionNote}
+              onChange={(e) => setSessionNote(e.target.value)}
+              placeholder="Add your thoughts, reflections, or key takeaways from this reading session..."
+              autoFocus
+            />
+            <button className={styles.saveNotesButton} onClick={handleSaveNotes}>
+              Add notes
+            </button>
+            <button className={styles.skipButton} onClick={() => handleSaveNotes()}>
+              Skip and finish
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

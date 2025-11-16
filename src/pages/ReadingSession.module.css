@@ -36,7 +36,8 @@
   left: 17px;
   width: 360px;
   height: 463px;
-  background-color: #f5f5f5;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-header-gradient-start);
   border-radius: var(--radius-small);
   display: flex;
   flex-direction: column;

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Navigation } from '../components/Navigation';
 import styles from './ReadingSession.module.css';
 
 export const ReadingSession = () => {
@@ -61,6 +62,8 @@ export const ReadingSession = () => {
           STOP
         </button>
       </div>
+
+      <Navigation showBack={true} showAdd={false} />
     </div>
   );
 };
