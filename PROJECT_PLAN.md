@@ -101,6 +101,11 @@ Design tokens will include:
 - Border radius values
 - Component-specific tokens
 
+## Icon Handling
+- All icons should be handled as **SVG components**
+- Create reusable SVG icon components (e.g., `IconArrowLeft.tsx`, `IconPlus.tsx`)
+- Style icons with CSS and accept color/size props for flexibility
+
 ## Data Storage (localStorage)
 Simple JSON objects stored in localStorage:
 ```typescript
